@@ -1,12 +1,17 @@
 import { useForm } from "react-hook-form"
 import Error from "./Error";
 import type { DraftPatient } from "../types";
+import { usePatientStore } from "../store";
+
+
 export default function PatientForm() {
-  
-    const {register, handleSubmit, formState:{errors}} = useForm<DraftPatient>()
+    
+    const addPatient = usePatientStore(state => state.addPatient)
+    const {register, handleSubmit, formState:{errors},reset} = useForm<DraftPatient>()
 
     const registerPatient = (data : DraftPatient) => {
-        console.log(data);   
+        addPatient(data)
+        reset()
     }
 
   return (
@@ -43,7 +48,7 @@ export default function PatientForm() {
 
               <div className="mb-5">
                 <label htmlFor="caretaker" className="text-sm uppercase font-bold">
-                    Caretaker 
+                    Care taker 
                 </label>
                 <input  
                     id="caretaker"
